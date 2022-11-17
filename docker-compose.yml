@@ -1,0 +1,18 @@
+version: '3'
+services: 
+  poi-mysql:
+    container_name: poi-mysql
+    image: mysql:5
+    restart: always
+    expose:
+      - 3306
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "&QwtyCEZ53#XJ&1&D9SG7tq9d"
+      MYSQL_DATABASE: poi
+      MYSQL_USER: poi
+      MYSQL_PASSWORD: "&QwtyCEZ53#XJ&1&D9SG7tq9d"
+    volumes:
+      - /home/ubuntu/projet_poi/Poi/mysql_data5:/var/lib/mysql
+ 
