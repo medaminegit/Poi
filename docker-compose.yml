@@ -15,4 +15,16 @@ services:
       MYSQL_PASSWORD: "&QwtyCEZ53#XJ&1&D9SG7tq9d"
     volumes:
       - /home/ubuntu/projet_poi/Poi/mysql_data5:/var/lib/mysql
- 
+  poi-neo4j:
+    container_name: poi-neo4j
+    image: datascientest/neo4j
+    expose:
+      - 7474
+      - 7687
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - /var/lib/neo4j_data
+
+  
