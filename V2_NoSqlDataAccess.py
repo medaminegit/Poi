@@ -2,14 +2,10 @@ from neo4j import GraphDatabase, basic_auth
 import pandas as pd
 import math
 
-#df = pd.read_csv('data_graph_def.csv')
-#df = df[['lieu', 'type', 'latitude', 'longitude', 'ville']]
-#df = df.head(500)
 
-class Point:
-    def __init__(self,longitude,latitude):
-        self.longitude=longitude
-        self.latitude=latitude
+
+
+
 
 class NoSqlDataAccess:
 
@@ -43,15 +39,15 @@ class NoSqlDataAccess:
        self.close()
 
 
-    def recherche_distance(self):
+    def recherche_distance(self, lat, longi):
         with self.driver.session() as session:
             cypher_query = '''
                 MATCH (s1:Info)
-                WITH point({x : toFloat(s1.latitude), y : toFloat(s1.longitude)}) AS p1, point({x:toFloat(45.4396416), y:toFloat(4.3857321)}) AS p2, s1
-                RETURN point.distance(p1,p2) AS Distance, s1.lieu AS Lieu ORDER BY Distance
-                '''
-
+                WITH point({{x: toFloat(s1.latitude), y: toFloat(s1.longitude)}}) AS p1, point({{x: toFloat({lat}), y: toFloat({longi})}}) AS p2, s1
+                RETURN point.distance(p1,p2) AS Distance, s1.latitude AS latitude, s1.longitude AS longitude, s1.lieu AS Lieu ORDER BY Distance
+                '''.format(lat=lat, longi=longi)
+            print(f'Requête Cypher : {cypher_query}')
             result = session.run(cypher_query)
+            print(f'Résultat de la requête : {result}')
             return result.fetch(5)
         self.close()
-
